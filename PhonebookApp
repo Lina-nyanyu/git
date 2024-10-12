@@ -1,0 +1,80 @@
+public class Phonebook {
+    private List<Contact> contacts;
+
+    public Phonebook() {
+        contacts = new ArrayList<>();
+    }
+
+    public void insertContact(String name, String phoneNumber) {
+        Contact contact = new Contact(name, phoneNumber);
+        contacts.add(contact);
+        System.out.println("Contact " + name + " added.");
+    }
+
+    public Contact searchContact(String searchName) {
+        for (Contact contact : contacts) {
+            if (contact.getName().equals(searchName)) {
+                System.out.println("Contact found: " + contact);
+                return contact;
+            }
+        }
+        System.out.println("Contact not found.");
+        return null;
+    }
+
+    public void displayContacts() {
+        if (contacts.isEmpty()) {
+            System.out.println("Phonebook is empty.");
+        } else {
+            for (Contact contact : contacts) {
+                System.out.println(contact);
+            }
+        }
+    }
+public void deleteContact(String deleteName) {
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getName().equals(deleteName)) {
+                contacts.remove(i);
+                System.out.println("Contact " + deleteName + " deleted.");
+                return;
+            }
+        }
+        System.out.println("Contact not found.");
+    }
+
+    public void updateContact(String updateName, String newPhoneNumber) {
+        for (Contact contact : contacts) {
+            if (contact.getName().equals(updateName)) {
+                contact.setPhoneNumber(newPhoneNumber);
+                System.out.println("Contact " + updateName + " updated.");
+                return;
+            }
+        }
+        System.out.println("Contact not found.");
+    }
+
+    public void sortContacts() {
+        contacts.sort(Comparator.comparing(Contact::getName));
+        System.out.println("Contacts sorted by name.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Phonebook phonebook = new Phonebook();
+
+        phonebook.insertContact("Alice", "123-456-7890");
+        phonebook.insertContact("Bob", "234-567-8901");
+        phonebook.displayContacts();
+
+        phonebook.searchContact("Alice");
+        phonebook.updateContact("Alice", "111-222-3333");
+        phonebook.displayContacts();
+
+        phonebook.deleteContact("Bob");
+        phonebook.displayContacts();
+
+        phonebook.sortContacts();
+        phonebook.displayContacts();
+    }
+}
